@@ -32,6 +32,9 @@
 
 #define AFFS_ROOT_BMAPS		25
 
+/* Seconds since Amiga epoch of 1978/01/01 to UNIX */
+#define AFFS_EPOCH_DELTA ((8 * 365 + 2) * 86400LL)
+
 struct affs_date {
 	__be32 days;
 	__be32 mins;
@@ -77,7 +80,7 @@ struct affs_head {
 	__be32 spare1;
 	__be32 first_data;
 	__be32 checksum;
-	__be32 table[1];
+	__be32 table[];
 };
 
 struct affs_tail {
@@ -105,7 +108,7 @@ struct slink_front
 	__be32 key;
 	__be32 spare1[3];
 	__be32 checksum;
-	u8 symname[1];	/* depends on block size */
+	u8 symname[];	/* depends on block size */
 };
 
 struct affs_data_head
@@ -116,7 +119,7 @@ struct affs_data_head
 	__be32 size;
 	__be32 next;
 	__be32 checksum;
-	u8 data[1];	/* depends on block size */
+	u8 data[];	/* depends on block size */
 };
 
 /* Permission bits */
